@@ -36,8 +36,43 @@
  * Nota: El DOM es esencial para el desarrollo frontend y permite que el contenido
  * y la presentación se separen de la lógica de la aplicación, haciendo posible
  * construir aplicaciones web complejas.
+ *
+ *
+ * Métodos de selección de elementos del DOM:
+ * --------------------------------------------
+ * Estos métodos permiten acceder a los elementos del HTML para leerlos o modificarlos.
+ * Aquí tienes los más comunes:
+ *
+ * 1. document.getElementById("id")
+ *    - Devuelve el elemento que tiene ese ID.
+ *    - Ejemplo:
+ *        const parrafo = document.getElementById("valor");
+ *        parrafo.textContent = "Nuevo texto";
+ *
+ * 2. document.getElementsByClassName("clase")
+ *    - Devuelve una colección (HTMLCollection) de todos los elementos con esa clase.
+ *    - Ejemplo:
+ *        const botones = document.getElementsByClassName("boton");
+ *        botones[0].textContent = "Botón modificado";
+ *
+ * 3. document.getElementsByTagName("etiqueta")
+ *    - Devuelve una colección de todos los elementos con esa etiqueta.
+ *    - Ejemplo:
+ *        const parrafos = document.getElementsByTagName("p");
+ *        parrafos[0].style.color = "blue";
+ *
+ * 4. document.querySelector("selector")
+ *    - Devuelve el primer elemento que coincide con el selector CSS indicado.
+ *    - Ejemplo:
+ *        const titulo = document.querySelector("h1");
+ *        titulo.style.fontSize = "32px";
+ *
+ * 5. document.querySelectorAll("selector")
+ *    - Devuelve todos los elementos que coinciden con el selector CSS (NodeList).
+ *    - Ejemplo:
+ *        const todosLosBotones = document.querySelectorAll("button");
+ *        todosLosBotones.forEach(boton => boton.style.margin = "5px");
  ***********************************************************************/
-
 
 // ===============================
 // Crear elementos del DOM desde JS
@@ -110,3 +145,158 @@ botonReset.addEventListener("click", () => {
   contador = 0;
   actualizarValor();
 });
+
+// ===============================
+// Ejemplos prácticos de selección de elementos del DOM
+// ===============================
+
+// Supongamos que ya tenemos este elemento en el HTML:
+// <p id="mensaje" class="info">Hola mundo</p>
+
+// 1. getElementById()
+// Busca un elemento por su ID
+const parrafoPorId = document.getElementById("valor");
+parrafoPorId.textContent = "Texto cambiado con getElementById";
+
+// 2. getElementsByClassName()
+// Devuelve una colección de elementos con la misma clase
+// Vamos a añadir clases para probarlo:
+botonSumar.className = "boton";
+botonRestar.className = "boton";
+botonReset.className = "boton";
+
+// Ahora seleccionamos todos los elementos con la clase "boton"
+const botones = document.getElementsByClassName("boton");
+botones[0].style.backgroundColor = "lightgreen";
+botones[1].style.backgroundColor = "lightcoral";
+botones[2].style.backgroundColor = "lightblue";
+
+// 3. getElementsByTagName()
+// Selecciona todos los elementos con una etiqueta determinada
+const parrafos = document.getElementsByTagName("p");
+for (let i = 0; i < parrafos.length; i++) {
+  parrafos[i].style.fontFamily = "Arial";
+}
+
+// 4. querySelector()
+// Selecciona el primer elemento que coincida con un selector CSS
+const primerBoton = document.querySelector("button");
+primerBoton.style.border = "2px solid black";
+
+// También puedes buscar por clase o ID como en CSS
+const parrafoValor = document.querySelector("#valor");
+parrafoValor.style.fontSize = "24px";
+
+// 5. querySelectorAll()
+// Selecciona todos los elementos que coinciden con un selector CSS
+const todosLosBotones = document.querySelectorAll("button");
+todosLosBotones.forEach((btn, index) => {
+  btn.textContent += ` (${index + 1})`; // Añade número al texto
+});
+
+// ===============================
+// Métodos para definir, obtener y eliminar atributos
+// ===============================
+
+/*
+Los elementos HTML tienen atributos como "id", "class", "href", "src", "type", etc.
+JavaScript nos permite manipular estos atributos con los siguientes métodos:
+
+1. setAttribute(nombre, valor)
+   → Establece un nuevo atributo o modifica uno existente.
+
+2. getAttribute(nombre)
+   → Devuelve el valor de un atributo.
+
+3. removeAttribute(nombre)
+   → Elimina un atributo del elemento.
+
+Veamos ejemplos usando los botones del contador.
+*/
+
+// 1. setAttribute()
+// Añadir un atributo personalizado y modificar uno existente
+botonSumar.setAttribute("title", "Haz clic para sumar 1");
+botonRestar.setAttribute("title", "Haz clic para restar 1");
+botonReset.setAttribute("title", "Haz clic para reiniciar");
+
+botonSumar.setAttribute("data-accion", "sumar");
+botonRestar.setAttribute("data-accion", "restar");
+botonReset.setAttribute("data-accion", "reset");
+
+// También podemos modificar atributos estándar
+valor.setAttribute("class", "contador-valor");
+
+// 2. getAttribute()
+// Obtener el valor de un atributo
+const accionSumar = botonSumar.getAttribute("data-accion");
+console.log("Acción del botón sumar:", accionSumar); // Mostraría: "sumar"
+
+const claseValor = valor.getAttribute("class");
+console.log("Clase del párrafo valor:", claseValor); // Mostraría: "contador-valor"
+
+// 3. removeAttribute()
+// Eliminar un atributo de un elemento
+valor.removeAttribute("class");
+console.log("Clase eliminada del valor:", valor.getAttribute("class")); // null
+
+
+// ===============================
+// Atributos globales en el DOM (explicación y ejemplos)
+// ===============================
+
+/*
+Los atributos globales son atributos que se pueden aplicar a cualquier elemento HTML,
+y permiten controlar cosas como:
+
+  • id              → Identificador único del elemento.
+  • class           → Clase(s) CSS para aplicar estilos.
+  • style           → Estilos en línea directamente en el HTML.
+  • title           → Texto emergente al pasar el cursor por encima.
+  • hidden          → Oculta el elemento del documento visual.
+  • tabindex        → Orden de navegación con el teclado (tecla Tab).
+  • contenteditable → Indica si el contenido del elemento se puede editar.
+  • draggable       → Permite arrastrar el elemento.
+  • lang            → Define el idioma del contenido.
+*/
+
+// 1. id y class
+titulo.setAttribute("id", "titulo-contador");
+titulo.setAttribute("class", "titulo-principal");
+
+console.log(titulo.id);    // "titulo-contador"
+console.log(titulo.className); // "titulo-principal"
+
+// 2. style (estilos en línea)
+titulo.style.textAlign = "center";               // Estilo en JS (más común)
+titulo.setAttribute("style", "margin-top: 20px"); // También se puede hacer así (menos común)
+
+// 3. title (tooltip emergente)
+valor.setAttribute("title", "Este número cambia al usar los botones");
+
+// 4. hidden (ocultar un elemento)
+valor.hidden = true;    // Oculta el elemento (como si no estuviera)
+setTimeout(() => {
+  valor.hidden = false; // Lo muestra otra vez después de 2 segundos
+}, 2000);
+
+// 5. tabindex (orden de tabulación con teclado)
+botonSumar.setAttribute("tabindex", "1");
+botonRestar.setAttribute("tabindex", "2");
+botonReset.setAttribute("tabindex", "3");
+
+// 6. contenteditable (editable por el usuario)
+const nota = document.createElement("p");
+nota.textContent = "Haz doble clic aquí para editar este texto";
+nota.setAttribute("contenteditable", "true");
+document.body.appendChild(nota);
+
+// 7. draggable (permite arrastrar)
+titulo.setAttribute("draggable", "true");
+
+// 8. lang (idioma del contenido)
+titulo.setAttribute("lang", "es");
+
+// 9. data-* (atributos personalizados)
+botonSumar.setAttribute("data-info", "Botón que suma");
+console.log(botonSumar.dataset.info); // Accede directamente al atributo data-info
