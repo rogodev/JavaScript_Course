@@ -268,6 +268,7 @@ console.log(titulo.id);    // "titulo-contador"
 console.log(titulo.className); // "titulo-principal"
 
 // 2. style (estilos en línea)
+// Las propiedades de css dejan de nombrarse con guiones y se utiliza el estilo camel Case
 titulo.style.textAlign = "center";               // Estilo en JS (más común)
 titulo.setAttribute("style", "margin-top: 20px"); // También se puede hacer así (menos común)
 
@@ -300,3 +301,94 @@ titulo.setAttribute("lang", "es");
 // 9. data-* (atributos personalizados)
 botonSumar.setAttribute("data-info", "Botón que suma");
 console.log(botonSumar.dataset.info); // Accede directamente al atributo data-info
+
+
+
+// ===============================
+// Atributos específicos de los elementos <input> (con ejemplos)
+// ===============================
+
+/*
+Los inputs tienen muchos atributos útiles. Aquí tienes los más comunes:
+
+  • type            → Define el tipo de input (text, number, checkbox, etc.)
+  • value           → Valor actual del input.
+  • placeholder     → Texto gris que se muestra como guía.
+  • disabled        → Inactiva el input (no se puede usar).
+  • readonly        → El usuario no puede modificar el valor, pero sí copiarlo.
+  • required        → Hace que el campo sea obligatorio para enviar un formulario.
+  • checked         → Marca una casilla o radio.
+  • min, max        → Valores mínimos y máximos (para inputs de número o fecha).
+  • step            → Valor incremental (ej. de 5 en 5).
+  • maxlength       → Número máximo de caracteres.
+  • minlength       → Número mínimo de caracteres.
+*/
+
+// Creamos un input de ejemplo
+const inputNombre = document.createElement("input");
+inputNombre.setAttribute("type", "text");
+inputNombre.setAttribute("placeholder", "Escribe tu nombre");
+inputNombre.setAttribute("maxlength", "20");
+inputNombre.setAttribute("required", "true");
+
+document.body.appendChild(document.createElement("br")); // salto de línea
+document.body.appendChild(inputNombre);
+
+// Podemos cambiar el tipo a number o date, por ejemplo
+// inputNombre.type = "number";
+
+// Obtener o modificar su valor con JavaScript
+inputNombre.value = "Rodrigo";  // Establece un valor inicial
+console.log("Valor del input:", inputNombre.value); // Lo muestra por consola
+
+// Deshabilitar el input durante 2 segundos
+inputNombre.disabled = true;
+setTimeout(() => {
+  inputNombre.disabled = false;
+}, 2000);
+
+// Hacerlo de solo lectura (se puede seleccionar pero no escribir)
+inputNombre.readOnly = true;
+setTimeout(() => {
+  inputNombre.readOnly = false;
+}, 2000);
+
+// ===============================
+// Otros ejemplos con diferentes tipos de input
+// ===============================
+
+// Input tipo número con min, max y step
+const inputEdad = document.createElement("input");
+inputEdad.type = "number";
+inputEdad.min = "18";
+inputEdad.max = "100";
+inputEdad.step = "1";
+inputEdad.placeholder = "Edad (18 a 100)";
+document.body.appendChild(document.createElement("br"));
+document.body.appendChild(inputEdad);
+
+// Checkbox
+const inputAcepto = document.createElement("input");
+inputAcepto.type = "checkbox";
+inputAcepto.checked = true; // Lo marcamos por defecto
+inputAcepto.id = "acepto";
+
+const labelAcepto = document.createElement("label");
+labelAcepto.textContent = " Acepto los términos";
+labelAcepto.setAttribute("for", "acepto");
+
+document.body.appendChild(document.createElement("br"));
+document.body.appendChild(inputAcepto);
+document.body.appendChild(labelAcepto);
+
+// Leer si está marcado o no
+console.log("¿Aceptado?:", inputAcepto.checked);
+
+// Input tipo contraseña
+const inputClave = document.createElement("input");
+inputClave.type = "password";
+inputClave.placeholder = "Contraseña";
+inputClave.required = true;
+
+document.body.appendChild(document.createElement("br"));
+document.body.appendChild(inputClave);
